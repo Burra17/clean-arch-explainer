@@ -21,10 +21,20 @@ import {
 
 const LAYERS = [
   { id: "user", label: "Användare", color: "#64748b", icon: Globe },
-  { id: "presentation", label: "Presentation (API)", color: "#3b82f6", icon: Send },
+  {
+    id: "presentation",
+    label: "Presentation (API)",
+    color: "#3b82f6",
+    icon: Send,
+  },
   { id: "application", label: "Applikation", color: "#8b5cf6", icon: Cpu },
   { id: "domain", label: "Domän", color: "#f59e0b", icon: Package },
-  { id: "infrastructure", label: "Infrastruktur", color: "#10b981", icon: HardDrive },
+  {
+    id: "infrastructure",
+    label: "Infrastruktur",
+    color: "#10b981",
+    icon: HardDrive,
+  },
   { id: "database", label: "Databas", color: "#ef4444", icon: Database },
 ];
 
@@ -36,7 +46,7 @@ const STEPS = [
     title: "Steg 1: HTTP-förfrågan",
     code: "GET /api/products/1",
     description:
-      "Allt börjar här. En användare (t.ex. en frontend-app, Postman eller en webbläsare) skickar en HTTP GET-förfrågan till vår API-endpoint. Förfrågan säger i princip: \"Hej server, ge mig produkten med ID 1\". ASP.NET:s routing-system tar emot anropet och kollar vilken controller och metod som matchar URL:en /api/products/1.",
+      'Allt börjar här. En användare (t.ex. en frontend-app, Postman eller en webbläsare) skickar en HTTP GET-förfrågan till vår API-endpoint. Förfrågan säger i princip: "Hej server, ge mig produkten med ID 1". ASP.NET:s routing-system tar emot anropet och kollar vilken controller och metod som matchar URL:en /api/products/1.',
     highlight: ["user", "presentation"],
     arrow: { from: "user", to: "presentation" },
   },
@@ -69,7 +79,7 @@ public async Task<IActionResult> Get(int id)
     // Handler aktiveras av MediatR
 }`,
     description:
-      "MediatR fungerar som en brevbärare — den tar emot vårt query-objekt och letar upp rätt handler att leverera det till. I det här fallet hittar den GetProductByIdQueryHandler. Handleren har injicerat ett beroende till IProductRepository via konstruktorn. Det är ett interface (kontrakt) som säger \"jag kan hämta produkter\" — men handleren bryr sig inte om vilken konkret klass som gör jobbet. Det löser Dependency Injection åt oss vid körtid.",
+      'MediatR fungerar som en brevbärare — den tar emot vårt query-objekt och letar upp rätt handler att leverera det till. I det här fallet hittar den GetProductByIdQueryHandler. Handleren har injicerat ett beroende till IProductRepository via konstruktorn. Det är ett interface (kontrakt) som säger "jag kan hämta produkter" — men handleren bryr sig inte om vilken konkret klass som gör jobbet. Det löser Dependency Injection åt oss vid körtid.',
     highlight: ["application"],
     arrow: null,
   },
@@ -104,7 +114,7 @@ public async Task<IActionResult> Get(int id)
     }
 }`,
     description:
-      "Här är vi i infrastrukturlagret — den \"smutsiga\" delen som pratar med omvärlden. ProductRepository implementerar IProductRepository-interfacet och använder Entity Framework Core (via _context) för att bygga en databasfråga. EF Core översätter vårt LINQ-uttryck till riktig SQL och skickar iväg det till databasen. Det fina är att om vi någon dag vill byta från SQL Server till t.ex. PostgreSQL behöver vi bara ändra här — resten av appen märker inget.",
+      'Här är vi i infrastrukturlagret — den "smutsiga" delen som pratar med omvärlden. ProductRepository implementerar IProductRepository-interfacet och använder Entity Framework Core (via _context) för att bygga en databasfråga. EF Core översätter vårt LINQ-uttryck till riktig SQL och skickar iväg det till databasen. Det fina är att om vi någon dag vill byta från SQL Server till t.ex. PostgreSQL behöver vi bara ändra här — resten av appen märker inget.',
     highlight: ["infrastructure"],
     arrow: { from: "infrastructure", to: "database" },
   },
@@ -242,13 +252,13 @@ export default function CleanArchitectureExplainer() {
       borderColor: isActive
         ? layer.color
         : isHighlighted
-        ? layer.color + "80"
-        : "rgba(100,116,139,0.15)",
+          ? layer.color + "80"
+          : "rgba(100,116,139,0.15)",
       background: isActive
         ? layer.color + "18"
         : isHighlighted
-        ? layer.color + "08"
-        : "rgba(15,23,42,0.4)",
+          ? layer.color + "08"
+          : "rgba(15,23,42,0.4)",
       boxShadow: isActive
         ? `0 0 30px ${layer.color}25, inset 0 0 30px ${layer.color}08`
         : "none",
@@ -298,7 +308,8 @@ export default function CleanArchitectureExplainer() {
     <div
       className="min-h-screen w-full text-white overflow-hidden relative"
       style={{
-        background: "linear-gradient(145deg, #0a0e1a 0%, #0f172a 40%, #0c1220 100%)",
+        background:
+          "linear-gradient(145deg, #0a0e1a 0%, #0f172a 40%, #0c1220 100%)",
         fontFamily: "'JetBrains Mono', 'Fira Code', 'SF Mono', monospace",
       }}
     >
@@ -362,7 +373,8 @@ export default function CleanArchitectureExplainer() {
                       scaleX: i <= step ? 1 : 0,
                       background:
                         i === step
-                          ? LAYERS.find((l) => l.id === STEPS[i].activeLayer)?.color
+                          ? LAYERS.find((l) => l.id === STEPS[i].activeLayer)
+                              ?.color
                           : "rgba(148,163,184,0.4)",
                     }}
                     style={{ transformOrigin: "left" }}
@@ -534,43 +546,39 @@ export default function CleanArchitectureExplainer() {
                         background:
                           LAYERS.find((l) => l.id === current.activeLayer)
                             ?.color + "20",
-                        color: LAYERS.find(
-                          (l) => l.id === current.activeLayer
-                        )?.color,
+                        color: LAYERS.find((l) => l.id === current.activeLayer)
+                          ?.color,
                         border: `1px solid ${
                           LAYERS.find((l) => l.id === current.activeLayer)
                             ?.color
                         }30`,
                       }}
                     >
-                      {current.direction === "down"
-                        ? "↓ Nedåt"
-                        : "↑ Uppåt"}
+                      {current.direction === "down" ? "↓ Nedåt" : "↑ Uppåt"}
                     </div>
                     <div
                       className="w-1 h-1 rounded-full"
                       style={{ background: "#475569" }}
                     />
                     <span className="text-[10px] text-slate-500 uppercase tracking-wider">
-                      {
-                        LAYERS.find((l) => l.id === current.activeLayer)
-                          ?.label
-                      }
+                      {LAYERS.find((l) => l.id === current.activeLayer)?.label}
                     </span>
                   </div>
                   <h2
                     className="text-xl font-bold mb-3"
                     style={{
-                      color:
-                        LAYERS.find((l) => l.id === current.activeLayer)
-                          ?.color,
+                      color: LAYERS.find((l) => l.id === current.activeLayer)
+                        ?.color,
                     }}
                   >
                     {current.title}
                   </h2>
                   <p
                     className="text-sm leading-relaxed"
-                    style={{ color: "#94a3b8", fontFamily: "'Inter', system-ui, sans-serif" }}
+                    style={{
+                      color: "#94a3b8",
+                      fontFamily: "'Inter', system-ui, sans-serif",
+                    }}
                   >
                     {current.description}
                   </p>
@@ -631,9 +639,13 @@ export default function CleanArchitectureExplainer() {
                       </div>
                       <p
                         className="text-xs leading-relaxed"
-                        style={{ color: "#94a3b8", fontFamily: "'Inter', system-ui, sans-serif" }}
+                        style={{
+                          color: "#94a3b8",
+                          fontFamily: "'Inter', system-ui, sans-serif",
+                        }}
                       >
-                        I den här uppsättningen ligger IProductRepository-interfacet i{" "}
+                        I den här uppsättningen ligger
+                        IProductRepository-interfacet i{" "}
                         <span style={{ color: "#8b5cf6" }}>
                           Applikationslagret
                         </span>
@@ -720,16 +732,14 @@ export default function CleanArchitectureExplainer() {
                   color:
                     step >= STEPS.length - 1
                       ? "#334155"
-                      : LAYERS.find((l) => l.id === current.activeLayer)
-                          ?.color,
+                      : LAYERS.find((l) => l.id === current.activeLayer)?.color,
                   border: `1px solid ${
                     step >= STEPS.length - 1
                       ? "rgba(100,116,139,0.1)"
                       : LAYERS.find((l) => l.id === current.activeLayer)
                           ?.color + "30"
                   }`,
-                  cursor:
-                    step >= STEPS.length - 1 ? "not-allowed" : "pointer",
+                  cursor: step >= STEPS.length - 1 ? "not-allowed" : "pointer",
                 }}
               >
                 Nästa
@@ -746,3 +756,4 @@ export default function CleanArchitectureExplainer() {
     </div>
   );
 }
+// Trigger new publish
